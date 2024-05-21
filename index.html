@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .calculator {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .display {
+            background-color: #222;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            font-size: 2em;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .button {
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            font-size: 1.2em;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #f3f3f3;
+        }
+
+        .button.function {
+            background-color: #f9f9f9;
+        }
+
+        .button.operator {
+            background-color: #f3f3f3;
+        }
+
+        .button.equals {
+            grid-column: span 2;
+            background-color: #ff8c00;
+            color: white;
+        }
+
+        .button.clear {
+            grid-column: span 2;
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <div class="button function" onclick="clearDisplay()">C</div>
+            <div class="button function" onclick="appendDisplay('(')">(</div>
+            <div class="button function" onclick="appendDisplay(')')">)</div>
+            <div class="button function" onclick="appendDisplay('%')">%</div>
+            <div class="button operator" onclick="appendDisplay('/')">÷</div>
+            
+            <div class="button" onclick="appendDisplay('7')">7</div>
+            <div class="button" onclick="appendDisplay('8')">8</div>
+            <div class="button" onclick="appendDisplay('9')">9</div>
+            <div class="button operator" onclick="appendDisplay('*')">×</div>
+            
+            <div class="button" onclick="appendDisplay('4')">4</div>
+            <div class="button" onclick="appendDisplay('5')">5</div>
+            <div class="button" onclick="appendDisplay('6')">6</div>
+            <div class="button operator" onclick="appendDisplay('-')">−</div>
+            
+            <div class="button" onclick="appendDisplay('1')">1</div>
+            <div class="button" onclick="appendDisplay('2')">2</div>
+            <div class="button" onclick="appendDisplay('3')">3</div>
+            <div class="button operator" onclick="appendDisplay('+')">+</div>
+            
+            <div class="button" onclick="appendDisplay('0')">0</div>
+            <div class="button" onclick="appendDisplay('.')">.</div>
+            <div class="button clear" onclick="clearDisplay()">AC</div>
+            <div class="button equals" onclick="calculateResult()">=</div>
+        </div>
+    </div>
+
+    <script>
+        function appendDisplay(value) {
+            const display = document.getElementById('display');
+            if (display.innerText === '0') {
+                display.innerText = value;
+            } else {
+                display.innerText += value;
+            }
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').innerText = '0';
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('display');
+            try {
+                display.innerText = eval(display.innerText.replace(/÷/g, '/').replace(/×/g, '*'));
+            } catch {
+                display.innerText = 'Error';
+            }
+        }
+    </script>
+</body>
